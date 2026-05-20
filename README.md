@@ -182,8 +182,8 @@ Password: medpredict@2026
 ![History Page](static/images/History.png)
 ![Analytics Report Page](static/images/Analytics.png)
 ![Log In](static/images/Login.png)
-![Prediction](static/images/Prediction.png)
 ![Sign Up](static/images/SignUp.png)
+![Prediction](static/images/Prediction.png)
 
 ## 📈 Model Performance
 
