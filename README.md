@@ -179,9 +179,9 @@ Password: medpredict@2026
 
 <img src="static/images/Home.png" width="100%" />
 
-<img src="static/images/Login.png" width="100%" />
+<img src="static/images/Login.png" />
 
-<img src="static/images/SignUp.png" width="100%" />
+<img src="static/images/SignUp.png"  />
 
 <img src="static/images/Prediction.png" width="100%" />
 
