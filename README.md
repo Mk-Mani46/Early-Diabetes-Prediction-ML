@@ -177,15 +177,9 @@ Password: medpredict@2026
 
 ## 📸 Screenshots
 
-| Home Page | Prediction Wizard | Admin Dashboard |
-|-----------|------------------|-----------------|
-| Patient-facing landing page with health info | Step-by-step clinical input form | System-wide monitoring panel |
-
-| History Page | Analytics Report | Result Screen |
-|--------------|-----------------|---------------|
-| Personal prediction logs with CSV download | Age distribution charts | High/Low risk detection result |
-
----
+![Home Page](static/images/HomePage.png)
+![Prediction](static/images/Prediction.png)
+![Admin](static/images/Adminpage.png)
 
 ## 📈 Model Performance
 
