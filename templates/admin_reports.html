@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Reports | MedPredict</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --primary: #e31c3d; --secondary: #2c3e50; --light-bg: #f4f7f6; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--light-bg); color: var(--secondary); display: flex; }
+        .sidebar { width: 250px; background: var(--secondary); color: white; min-height: 100vh; padding: 20px; position: fixed;}
+        .sidebar h2 { color: var(--primary); margin-bottom: 30px; text-align: center; }
+        .sidebar a { display: block; color: white; text-decoration: none; padding: 15px; margin-bottom: 10px; border-radius: 8px; transition: 0.3s; }
+        .sidebar a:hover, .sidebar a.active { background: var(--primary); }
+        .main-content { flex: 1; padding: 40px; margin-left: 250px; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 40px; }
+        .table-container { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .stat-card { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid var(--primary); }
+        h3 { color: var(--secondary); margin-bottom: 15px; }
+        .stats-grid { display: grid; gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2><i class="fa-solid fa-heart-pulse"></i> AdminPanel</h2>
+        <a href="/admin"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="/admin/reports" class="active"><i class="fa-solid fa-chart-pie"></i> Analytics Reports</a>
+        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Secure Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Analytics Reports</h1>
+                <p>Detailed visualizations of diabetic predictions across the system.</p>
+            </div>
+        </div>
+
+        <div class="analytics-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px;">
+            <div class="table-container" style="margin-bottom: 0;">
+                <h3><i class="fa-solid fa-chart-pie"></i> Prediction Analytics</h3>
+                <div style="width: 100%; max-width: 300px; margin: 20px auto 0;">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="table-container" style="margin-bottom: 0;">
+                <h3><i class="fa-solid fa-person-cane"></i> Age Demographics (Diabetic)</h3>
+                <div style="width: 100%; margin: 20px auto 0;">
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="table-container" style="margin-bottom: 0;">
+                <h3><i class="fa-solid fa-clipboard-list"></i> Summary Stats</h3>
+                <div class="stats-grid" style="grid-template-columns: 1fr; margin-bottom: 0; margin-top: 20px; gap: 15px;">
+                    <div class="stat-card" style="border-bottom: 4px solid #c62828; padding: 15px;">
+                        <h3 style="color: #c62828; font-size: 1.8rem; margin:0;">{{ diabetic_count }}</h3>
+                        <p style="font-size: 0.9rem;">Total Diabetic Cases</p>
+                    </div>
+                    <div class="stat-card" style="border-bottom: 4px solid #2e7d32; padding: 15px;">
+                        <h3 style="color: #2e7d32; font-size: 1.8rem; margin:0;">{{ non_diabetic_count }}</h3>
+                        <p style="font-size: 0.9rem;">Total Non-Diabetic Cases</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('predictionChart').getContext('2d');
+        const predictionChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Diabetic', 'Non-Diabetic'],
+                datasets: [{
+                    data: [{{ diabetic_count }}, {{ non_diabetic_count }}],
+                    backgroundColor: ['#c62828', '#2e7d32'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        const ageChart = new Chart(ageCtx, {
+            type: 'bar',
+            data: {
+                labels: {{ age_labels | tojson }},
+                datasets: [
+                    {
+                        label: 'Diabetic Cases',
+                        data: {{ diabetic_age_data | tojson }},
+                        backgroundColor: '#c62828',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Non-Diabetic Cases',
+                        data: {{ nondiabetic_age_data | tojson }},
+                        backgroundColor: '#2e7d32',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

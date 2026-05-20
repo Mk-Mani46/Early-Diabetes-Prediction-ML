@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About MedPredict | Final Year Project</title>
+    <style>
+        :root {
+            --primary: #e31c3d;
+            --primary-dark: #b8122d;
+            --secondary: #2c3e50;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--light-bg); display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: var(--white); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(233, 75, 75, 0.862); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 10px; }
+        .logo-1{ width: 35px; height: 35px; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-nav { background: var(--primary); color: white !important; padding: 10px 25px; text-decoration: none; border-radius: 50px; box-shadow: 0 4px 10px rgba(233, 75, 75, 0.862); }
+        .btn-nav:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        
+        main { padding: 60px 10%; flex-grow: 1; }
+        .container { background: white; padding: 50px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h1 { color: var(--primary); font-size: 2.8rem; margin-bottom: 20px; text-align: center; }
+        h2 { color: var(--secondary); font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; display: inline-block;}
+        p { font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 20px; }
+        ul { margin-left: 20px; margin-bottom: 20px; color: #555; font-size: 1.1rem; line-height: 1.8; }
+        li { margin-bottom: 10px; }
+        
+        footer { background: var(--secondary); color: white; padding: 30px 10%; text-align: center; margin-top: auto; }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; color: #888; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+           <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-1" alt="Logo">
+            <div>Med<span>Predict</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('symptoms') }}">Symptoms</a>
+            <a href="{{ url_for('prevention') }}">Prevention</a>
+        </nav>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('dashboard') }}" class="btn-nav">Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login_page') }}" class="btn-nav">Login / Signup</a>
+        {% endif %}
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>About MedPredict Intelligence</h1>
+            
+            <h2>What is Diabetes?</h2>
+            <p>Diabetes is a chronic metabolic disease characterized by elevated levels of blood glucose (or blood sugar), which leads over time to serious damage to the heart, blood vessels, eyes, kidneys, and nerves. The most common is type 2 diabetes, usually in adults, which occurs when the body becomes resistant to insulin or doesn't make enough insulin.</p>
+            
+            <h2>How It Affects Our Body</h2>
+            <p>If left unmanaged, diabetes can lead to severe health complications. Below is a breakdown of its systemic impact:</p>
+            <ul>
+                <li><strong>Cardiovascular System:</strong> High blood sugar damages blood vessels over time, leading to heart disease and stroke.</li>
+                <li><strong>Renal System (Kidneys):</strong> The kidneys contain millions of tiny blood vessel clusters that filter waste. Diabetes can damage this delicate filtering system, leading to kidney failure.</li>
+                <li><strong>Neurological System:</strong> Excess sugar can injure the walls of the capillaries that nourish your nerves, leading to neuropathy (tingling, numbness, or pain).</li>
+                <li><strong>Ocular System (Eyes):</strong> Diabetes can damage the blood vessels of the retina (diabetic retinopathy), potentially leading to blindness.</li>
+            </ul>
+
+            <h2>How MedPredict Works</h2>
+            <p><strong>MedPredict</strong> represents the intersection of Medical Science and Artificial Intelligence. Built as a Final Year Project, this web application utilizes an advanced <strong>Machine Learning Model</strong> that has been trained to predict the likelihood of an individual having diabetes.</p>
+            <p>Our predictive pipeline uses sophisticated ensemble learning techniques including <strong>CatBoost</strong> and <strong>StackingClassifiers</strong>. We feed your physiological parameters into this pipeline, which compares your metrics against thousands of historical data points from the Pima Indians Diabetes Database.</p>
+            <p>The 8 predictive parameters you enter during the test are:</p>
+            <ul>
+                <li><strong>Pregnancies:</strong> Number of times pregnant.</li>
+                <li><strong>Glucose:</strong> Plasma glucose concentration.</li>
+                <li><strong>Blood Pressure:</strong> Diastolic blood pressure (mm Hg).</li>
+                <li><strong>Skin Thickness:</strong> Triceps skin fold thickness (mm).</li>
+                <li><strong>Insulin:</strong> 2-Hour serum insulin (mu U/ml).</li>
+                <li><strong>BMI:</strong> Body mass index (weight in kg/(height in m)^2).</li>
+                <li><strong>Diabetes Pedigree Function:</strong> A function which scores likelihood of diabetes based on family history.</li>
+                <li><strong>Age:</strong> Age in years.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2026 MedPredict AI. Final Year Project.
+        </div>
+    </footer>
+</body>
+</html>

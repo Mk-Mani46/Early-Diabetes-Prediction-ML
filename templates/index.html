@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction | Final Year Project</title>
+    <style>
+        :root {
+    --primary: #e31c3d;       /* ADA Red */
+    --primary-dark: #b8122d;
+    --secondary: #2c3e50;     /* Dark Blue/Grey */
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --glass: rgba(255, 255, 255, 0.95);
+}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        html { scroll-behavior: smooth; }
+        header { background: var(--white);
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(233, 75, 75, 0.862);
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+        .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.logo-1{
+    width: 35px;        /* Adjust size as needed */
+    height: 35px;       /* Keep width and height same for square/circle icons */ /* Ensures the image doesn't stretch weirdly */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo span { color: var(--primary); }
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover { color: var(--primary); }
+
+.btn-nav {
+    background: var(--primary);
+    color: white !important;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(233, 75, 75, 0.862);
+}
+
+.btn-nav:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /*.auth-btn { background-color: #e31c3d; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }*/
+        section { padding: 100px 10%; min-height: auto; }
+        #home { background-color: #f5a6b3e7; text-align: center; padding-top: 150px; padding-bottom: 50px; }
+        .cta-btn { display: inline-block; background-color: #e31c3d; color: white; padding: 15px 40px; border-radius: 5px; text-decoration: none; margin-top: 20px; box-shadow: 0 5px 10px rgba(233, 75, 75, 0.862); }
+        .cta-btn:hover{
+            background: var(--primary-dark); transform: translateY(-2px);
+        }
+         /* --- Section Defaults --- */
+        section, .home-div { padding: 100px 10%; min-height: auto; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 10px; color: #e31c3d; }
+        .section-subtitle { text-align: center; color: #4d494971; margin-bottom: 50px; }
+        #about { display: flex; align-items: center; gap: 50px; background-color: #fff; }
+        .about-img { flex: 1; }
+        .about-img img { width: 100%; border-radius: 10px; }
+        .about-content { flex: 1;;}
+        .about-content h2 { color: #e31c3d; font-size: 2.2rem; margin-bottom: 20px; }
+        .about-content p { margin-bottom: 15px; color: #555555a0; font-size: 1.1rem; }
+
+        /* --- 3. Symptoms Section --- */
+        #symptoms { background-color: #f9fbfd; }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(233, 75, 75, 0.862);
+            transition: 0.5s;
+        }
+        .card:hover { transform: translateY(-10px); }
+        .card-icon { font-size: 3rem; color: #080808; margin-bottom: 20px; }
+        .card-icon-3{/* Add this to your style section */
+    width: 60px;        /* Adjust size as needed */
+    height: 60px;       /* Keep width and height same for square/circle icons */
+    object-fit: contain; /* Ensures the image doesn't stretch weirdly */
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+        .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #666; font-size: 0.9rem; }
+
+        /* --- 4. Prevention Section --- */
+        #prevention { background-color: #fff; text-align: center; }
+        #prevention h2 { color: #e31c3d; margin-bottom: 10px; font-size: 2.5rem; } /* Green Title */
+        .prevention-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        .prev-item { width: 220px; margin-bottom: 30px;padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;box-shadow: 0 5px 10px rgba(233, 75, 75, 0.862); }
+        .prev-icon { font-size: 2.5rem; color: #080808; margin-bottom: 15px; } /* Green Icons */
+        .prev-item h4 { font-size: 1.1rem; margin-bottom: 10px; }
+        .prev-item p { font-size: 0.9rem; color: #666; }
+
+        /* --- FOOTER --- */
+footer {
+    background: var(--secondary);
+    color: white;
+    padding: 50px 10%;
+    margin-top: auto;
+}
+
+.footer-content {
+    display:inline-flex;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-col h3 { margin-bottom: 20px; color: var(--primary); }
+.footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; }
+.footer-col a:hover { color: white; }
+
+.copyright {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+         <div class="logo">
+           <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+           <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-1">
+            <div>Med<span>Predict</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('symptoms') }}">Symptoms</a>
+                <a href="{{ url_for('prevention') }}">Prevention</a>
+        </nav>
+        <a href="{{ url_for('login_page') }}" class="btn-nav">Login / Signup</a>
+    </header>
+
+    <section id="home">
+        <h1>Ready to check your health?</h1>
+        <p>Get instant results using Machine Learning.</p>
+        <a href="{{ url_for('login_page') }}" class="cta-btn">Let's Predict Now</a>
+    </section>
+
+
+    <div id="about" class="home-div">
+        <div class="about-img">
+            <img src="https://img.freepik.com/free-vector/doctors-concept-illustration_114360-1515.jpg" style="box-shadow: 0 5px 20px rgba(233, 75, 75, 0.862);"alt="AI Healthcare">
+        </div>
+        <div class="about-content">
+            <h2>What is Diabetes?</h2>
+            <p>Diabetes is a chronic (long-lasting) health condition that affects how your body turns food into energy.</p>
+            <p>Most of the food you eat is broken down into sugar (glucose) and released into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin. If you have diabetes, your body either doesn't make enough insulin or can't use the insulin it makes as well as it should.</p>
+        </div>
+    </div>
+
+    <div id="symptoms" class="home-div">
+        <h2 class="section-title">Common Symptoms</h2>
+        <p class="section-subtitle">If you experience these, consider taking the prediction test.</p>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon"><img src="{{ url_for('static', filename='images/water.png') }}" alt="Fatigue" class="card-icon-3"></i></div>
+                <h3>Frequent Urination</h3>
+                <p>Needing to urinate more often than usual, especially at night.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><img src="{{ url_for('static', filename='images/extreme.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h3>Excessive Thirst</h3>
+                <p>Feeling thirsty all the time, regardless of how much you drink.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><img src="{{ url_for('static', filename='images/fatigue.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h3>Extreme Fatigue</h3>
+                <p>Feeling tired and weak even after getting enough sleep.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="prevention" class="home-div">
+        <h2>How to Prevent It?</h2>
+        <p class="section-subtitle">Small lifestyle changes can make a big difference.</p>
+
+        <div class="prevention-grid">
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/plan.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h4>Healthy Diet</h4>
+                <p>Eat more fiber, fruits, and veggies. Cut down on sugar.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/exercise.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h4>Active Life</h4>
+                <p>Aim for 30 minutes of moderate exercise daily.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/scale.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h4>Weight Control</h4>
+                <p>Losing 5-10% of body weight can significantly reduce risk.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/no-smoking.png') }}" alt="Fatigue" class="card-icon-3"></div>
+                <h4>No Smoking</h4>
+                <p>Smoking increases insulin resistance. Quitting helps.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>MedPredict</h3>
+                <p>Machine Learning algorithm to predict diabetes probability.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#about-diabetes">About Diabetes</a>
+                <a href="/predict">Take Test</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <a href="#">medpredict@gmail.com</a>
+                <a href="#">GitHub </a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 MedPredict AI. For Educational Purposes Only.
+        </div>
+    </footer>
+
+</body>
+</html>

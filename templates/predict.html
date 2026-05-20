@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment | MedPredict</title>
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --primary: #e31c3d;       /* ADA Red */
+            --primary-dark: #b8122d;
+            --secondary: #2c3e50;     /* Dark Blue/Grey */
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        /* --- GLOBAL RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f08798;
+            color: var(--secondary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .his-btn{background-color: #e31c3d; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;}
+
+        /* --- HEADER --- */
+        header {
+            background: var(--white); padding: 1rem 5%; position: sticky;
+            top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--primary); }
+        .nav-links a { text-decoration: none; color: #f3efef; font-weight: 500; transition: 0.3s; }
+
+        /* --- WIZARD CONTAINER --- */
+        .wizard-wrapper {
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            padding: 40px 20px; background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .wizard-card {
+            background: var(--glass); backdrop-filter: blur(10px); width: 100%; max-width: 600px;
+            padding: 50px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8); text-align: center;
+        }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; height: 8px; background: #eee; border-radius: 5px; margin-bottom: 40px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 5%; background: var(--primary); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* Tabs & Inputs */
+        .tab { display: none; animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .input-box input {
+            width: 100%; padding: 18px; margin-top: 15px; border: 2px solid #eee; border-radius: 12px;
+            font-size: 1.2rem; text-align: center; transition: 0.3s; background: #fdfdfd;
+        }
+        .input-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(227, 28, 61, 0.1); outline: none; }
+
+        /* Buttons */
+        .btn-next { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 30px; transition: 0.3s; width: 100%; }
+        .btn-next:hover { background: var(--primary-dark); }
+        .btn-prev { background: transparent; color: #888; border: none; cursor: pointer; margin-top: 15px; text-decoration: underline; }
+
+        /* --- RESULTS --- */
+        .result-box { text-align: center; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; margin: 0 auto 20px; }
+        .high { background: var(--primary); box-shadow: 0 10px 30px rgba(227, 28, 61, 0.4); }
+        .low { background: #27ae60; box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--secondary); color: white; padding: 50px 10%; margin-top: auto; }
+        .footer-content { display:inline-flex; gap: 40px; margin-bottom: 30px; }
+        .footer-col h3 { margin-bottom: 20px; color: var(--primary); }
+        .footer-col a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; }
+        .footer-col a:hover { color: white; }
+        .copyright { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; color: #888; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-heart-pulse fa-2x" style="color: #e31c3d;"></i>
+            <div>Med<span>Predict</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="/dashboard" class="his-btn">Exit Test</a>
+        </nav>
+    </header>
+
+    <section class="wizard-wrapper">
+        <div class="wizard-card">
+            
+            {% if prediction_result is defined %}
+            <div class="result-box">
+                {% if '1' in prediction_result %}
+                    <div class="score-circle high"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h2>High Risk Detected</h2>
+                    <p>Our algorithm indicates a high probability of diabetes. Please consult a specialist.</p>
+                {% elif '0' in prediction_result %}
+                    <div class="score-circle low"><i class="fa-solid fa-check"></i></div>
+                    <h2>Low Risk Detected</h2>
+                    <p>Great news! Our algorithm indicates a low probability of diabetes. Keep up the healthy lifestyle!</p>
+                {% else %}
+                    <h2>System Error</h2>
+                    <p>{{ prediction_result }}</p>
+                {% endif %}
+                <a href="/predict" class="btn-next" style="display:inline-block; text-decoration:none; margin-top:20px;">Restart Test</a>
+            </div>
+            
+            {% else %}
+            <form id="regForm" action="{{ url_for('predict') }}" method="post">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div class="tab">
+                    <i class="fa-solid fa-user-doctor fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
+                    <h2>Let's check your health</h2>
+                    <p>This will take about 60 seconds.</p>
+                </div>
+                <div class="tab">
+                    <h2>Pregnancies</h2>
+                    <p>Number of times pregnant (0-6)</p>
+                    <div class="input-box"><input type="number" name="pregnancies" placeholder="e.g. 0" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Glucose</h2>
+                    <p>Plasma glucose concentration(70-125)</p>
+                    <div class="input-box"><input type="number" name="glucose" placeholder="e.g. 110" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Blood Pressure</h2>
+                    <p>Diastolic blood pressure (60-80 mm Hg)</p>
+                    <div class="input-box"><input type="number" name="blood_pressure" placeholder="e.g. 72" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Skin Thickness</h2>
+                    <p>Triceps skin fold thickness (10-30 mm)</p>
+                    <div class="input-box"><input type="number" name="skin_thickness" placeholder="e.g. 20" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Insulin</h2>
+                    <p>2-Hour serum insulin (16-166 mu U/ml)</p>
+                    <div class="input-box"><input type="number" name="insulin" placeholder="e.g. 79" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>BMI Score</h2>
+                    <p>Body Mass Index value (18.5-30)</p>
+                    <div class="input-box"><input type="number" step="0.1" name="bmi" placeholder="e.g. 26.5" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Family History</h2>
+                    <p>Diabetes Pedigree Function (0.5 - 1.0)</p>
+                    <div class="input-box"><input type="number" step="0.001" name="dpf" placeholder="e.g. 0.527" oninput="this.className = ''"></div>
+                </div>
+                <div class="tab">
+                    <h2>Age</h2>
+                    <p>How old are you? (30-45)</p>
+                    <div class="input-box"><input type="number" name="age" placeholder="e.g. 45" oninput="this.className = ''"></div>
+                </div>
+
+                <div>
+                    <button type="button" class="btn-next" id="nextBtn" onclick="nextPrev(1)">Start</button>
+                    <button type="button" class="btn-prev" id="prevBtn" onclick="nextPrev(-1)">Back</button>
+                </div>
+            </form>
+            {% endif %}  </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>MedPredict</h3>
+                <p>AI-driven healthcare analysis for student research.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <a href="#">Dataset Source</a>
+                <a href="#">Model Accuracy</a>
+            </div>
+            <div class="footer-col">
+                <h3>Legal</h3>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Disclaimer</a>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 MedPredict AI.
+        </div>
+    </footer>
+
+    <script>
+        var currentTab = 0; 
+        showTab(currentTab); 
+
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            for(let i=0; i<x.length; i++) x[i].style.display = "none";
+            x[n].style.display = "block";
+            
+            // --- NEW FEATURE: Auto-focus the input field ---
+            // Finds the input box in the current tab and puts the cursor in it
+            var inputField = x[n].querySelector("input");
+            if (inputField) {
+                inputField.focus();
+            }
+            // -----------------------------------------------
+            
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+                document.getElementById("nextBtn").innerHTML = "Start Assessment";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline-block";
+                document.getElementById("nextBtn").innerHTML = "Next Step";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Analyze Results";
+            }
+            updateProgressBar(n);
+        }
+
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+            if (currentTab >= x.length) {
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            if(currentTab == 0) return true; // Skip intro
+            var x = document.getElementsByClassName("tab");
+            var y = x[currentTab].getElementsByTagName("input");
+            var valid = true;
+            for (var i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].style.borderColor = "red";
+                    valid = false;
+                } else {
+                    y[i].style.borderColor = "#eee";
+                }
+            }
+            return valid;
+        }
+
+        function updateProgressBar(n) {
+            var x = document.getElementsByClassName("tab");
+            var percent = ((n + 1) / x.length) * 100;
+            if(n==0) percent = 5;
+            document.getElementById("progressBar").style.width = percent + "%";
+        }
+
+        // --- Map the 'Enter' key to the 'Next' button ---
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); 
+                document.getElementById("nextBtn").click();
+            }
+        });
+    </script>
+</body>
+</html>

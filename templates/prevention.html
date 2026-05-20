@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prevention | MedPredict</title>
+    <style>
+        :root {
+            --primary: #e31c3d;
+            --primary-dark: #b8122d;
+            --secondary: #2c3e50;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--light-bg); display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: var(--white); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(233, 75, 75, 0.862); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 10px; }
+        .logo-1{ width: 35px; height: 35px; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-nav { background: var(--primary); color: white !important; padding: 10px 25px; text-decoration: none; border-radius: 50px; box-shadow: 0 4px 10px rgba(233, 75, 75, 0.862); }
+        .btn-nav:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        
+        main { padding: 60px 10%; flex-grow: 1; }
+        h1 { color: var(--primary); font-size: 2.8rem; margin-bottom: 20px; text-align: center; }
+        .section-subtitle { text-align: center; color: #4d494971; margin-bottom: 50px; font-size: 1.2rem; }
+        
+        .prevention-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 50px; }
+        .prev-item { width: 45%; min-width: 300px; background: white; padding: 40px 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: 0.3s; display: flex; align-items: center; gap: 20px; }
+        .prev-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(233, 75, 75, 0.862); }
+        .card-icon-3 { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
+        .prev-content h4 { font-size: 1.4rem; margin-bottom: 10px; color: var(--secondary); }
+        .prev-content p { font-size: 1rem; color: #555; line-height: 1.6; }
+        
+        .video-container { text-align: center; background: white; padding: 50px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .video-container h2 { color: var(--secondary); margin-bottom: 25px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        footer { background: var(--secondary); color: white; padding: 30px 10%; text-align: center; margin-top: auto; }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; color: #888; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+           <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-1" alt="Logo">
+            <div>Med<span>Predict</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('symptoms') }}">Symptoms</a>
+            <a href="{{ url_for('prevention') }}">Prevention</a>
+        </nav>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('dashboard') }}" class="btn-nav">Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login_page') }}" class="btn-nav">Login / Signup</a>
+        {% endif %}
+    </header>
+
+    <main>
+        <h1>Preventative Measures</h1>
+        <p class="section-subtitle">Type 2 diabetes is largely preventable through proactive lifestyle conditioning.</p>
+        
+        <div class="prevention-grid">
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/plan.png') }}" alt="Diet" class="card-icon-3"></div>
+                <div class="prev-content">
+                    <h4>Nutritional Optimization</h4>
+                    <p>Focus on a high-fiber, low-glycemic index diet. Whole grains, legumes, and lean proteins mitigate extreme blood sugar spikes and train your body to naturally regulate insulin levels over time.</p>
+                </div>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/exercise.png') }}" alt="Exercise" class="card-icon-3"></div>
+                <div class="prev-content">
+                    <h4>Aerobic & Anaerobic Activity</h4>
+                    <p>Both cardiovascular aerobic exercise and resistance training anaerobic exercise combat diabetes. They increase insulin sensitivity, which means your body requires less insulin to shuttle glucose to your cells.</p>
+                </div>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/scale.png') }}" alt="Weight" class="card-icon-3"></div>
+                <div class="prev-content">
+                    <h4>BMI Management</h4>
+                    <p>Excess fat, particularly visceral fat stored in the abdominal cavity, directly contributes to insulin resistance. Losing just 5% of this fat can exponentially lower your diabetic risk factors.</p>
+                </div>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><img src="{{ url_for('static', filename='images/no-smoking.png') }}" alt="Smoking" class="card-icon-3"></div>
+                <div class="prev-content">
+                    <h4>Smoking Cessation</h4>
+                    <p>Nicotine alters cellular chemistry and directly causes cells to stop responding to insulin over time. Studies indicate smokers are 30% to 40% more likely to develop Type 2 diabetes compared to nonsmokers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <h2>Watch: Expert Guide on Diabetes Prevention</h2>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/pPDk2hX0v9U" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2026 MedPredict AI. Final Year Project.
+        </div>
+    </footer>
+</body>
+</html>

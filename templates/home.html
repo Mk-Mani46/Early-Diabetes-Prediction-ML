@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction | Final Year Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- General Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { color: #333; line-height: 1.6; }
+
+        /* --- Header --- */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
+        }
+        .logo { font-size: 24px; font-weight: bold; color: #007bff; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #007bff; }
+        .auth-btn { background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .auth-btn:hover { background-color: #0056b3; }
+
+        /* --- Section Defaults --- */
+        section { padding: 100px 10%; min-height: auto; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 10px; color: #333; }
+        .section-subtitle { text-align: center; color: #666; margin-bottom: 50px; }
+
+        /* --- 1. Home / Hero Section --- */
+        #home {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding-top: 150px; /* Extra padding for header */
+            padding-bottom: 50px;
+        }
+        #home h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        .cta-btn {
+            display: inline-block;
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,123,255,0.3); }
+
+        /* --- 2. About Section --- */
+        #about { display: flex; align-items: center; gap: 50px; background-color: #fff; }
+        .about-img { flex: 1; }
+        .about-img img { width: 100%; border-radius: 10px; }
+        .about-content { flex: 1; }
+        .about-content h2 { color: #007bff; font-size: 2.2rem; margin-bottom: 20px; }
+        .about-content p { margin-bottom: 15px; color: #555; font-size: 1.1rem; }
+
+        /* --- 3. Symptoms Section --- */
+        #symptoms { background-color: #f9fbfd; }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-10px); }
+        .card-icon { font-size: 3rem; color: #007bff; margin-bottom: 20px; }
+        .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #666; font-size: 0.9rem; }
+
+        /* --- 4. Prevention Section --- */
+        #prevention { background-color: #fff; text-align: center; }
+        #prevention h2 { color: #28a745; margin-bottom: 10px; font-size: 2.5rem; } /* Green Title */
+        .prevention-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        .prev-item { width: 220px; margin-bottom: 30px; }
+        .prev-icon { font-size: 2.5rem; color: #28a745; margin-bottom: 15px; } /* Green Icons */
+        .prev-item h4 { font-size: 1.1rem; margin-bottom: 10px; }
+        .prev-item p { font-size: 0.9rem; color: #666; }
+
+        /* --- Footer --- */
+        footer { background-color: #2c3e50; color: white; text-align: center; padding: 20px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">DiaPredict</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Diabetes</a></li>
+                <li><a href="#symptoms">Symptoms</a></li>
+                <li><a href="#prevention">Prevention</a></li>
+            </ul>
+        </nav>
+        <a href="login.html" action="/login" class="auth-btn">Login / Signup</a>
+    </header>
+
+    <section id="home">
+        <h1>Ready to check your health?</h1>
+        <a href="login.html" class="cta-btn">Let's Predict Now</a>
+    </section>
+
+    <section id="about">
+        <div class="about-img">
+            <img src="https://placehold.co/600x400/87CEEB/white?text=Superhero+Image" alt="Diabetes Awareness">
+        </div>
+        <div class="about-content">
+            <h2>What is Diabetes?</h2>
+            <p>Diabetes is a chronic (long-lasting) health condition that affects how your body turns food into energy.</p>
+            <p>Most of the food you eat is broken down into sugar (glucose) and released into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin. If you have diabetes, your body either doesn't make enough insulin or can't use the insulin it makes as well as it should.</p>
+        </div>
+    </section>
+
+    <section id="symptoms">
+        <h2 class="section-title">Common Symptoms</h2>
+        <p class="section-subtitle">If you experience these, consider taking the prediction test.</p>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-tint"></i></div>
+                <h3>Frequent Urination</h3>
+                <p>Needing to urinate more often than usual, especially at night.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-glass-water"></i></div>
+                <h3>Excessive Thirst</h3>
+                <p>Feeling thirsty all the time, regardless of how much you drink.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-battery-quarter"></i></div>
+                <h3>Extreme Fatigue</h3>
+                <p>Feeling tired and weak even after getting enough sleep.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="prevention">
+        <h2>How to Prevent It?</h2>
+        <p class="section-subtitle">Small lifestyle changes can make a big difference.</p>
+
+        <div class="prevention-grid">
+            <div class="prev-item">
+                <div class="prev-icon"><i class="fas fa-apple-alt"></i></div>
+                <h4>Healthy Diet</h4>
+                <p>Eat more fiber, fruits, and veggies. Cut down on sugar.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><i class="fas fa-bicycle"></i></div>
+                <h4>Active Life</h4>
+                <p>Aim for 30 minutes of moderate exercise daily.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><i class="fas fa-weight"></i></div>
+                <h4>Weight Control</h4>
+                <p>Losing 5-10% of body weight can significantly reduce risk.</p>
+            </div>
+            <div class="prev-item">
+                <div class="prev-icon"><i class="fas fa-ban-smoking"></i></div>
+                <h4>No Smoking</h4>
+                <p>Smoking increases insulin resistance. Quitting helps.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Diabetes Prediction Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
