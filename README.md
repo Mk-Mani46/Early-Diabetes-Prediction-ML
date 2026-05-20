@@ -177,13 +177,19 @@ Password: medpredict@2026
 
 ## 📸 Screenshots
 
-![Home Page](static/images/Home.png)
-![Admin Page](static/images/Admin.png)
-![History Page](static/images/History.png)
-![Analytics Report Page](static/images/Analytics.png)
-![Log In](static/images/Login.png)
-![Sign Up](static/images/SignUp.png)
-![Prediction](static/images/Prediction.png)
+<img src="static/images/Home.png" width="100%" />
+
+<img src="static/images/Login.png" width="100%" />
+
+<img src="static/images/SignUp.png" width="100%" />
+
+<img src="static/images/Prediction.png" width="100%" />
+
+<img src="static/images/History.png" width="100%" />
+
+<img src="static/images/Admin.png" width="100%" />
+
+<img src="static/images/Analytics.png" width="100%" />
 
 ## 📈 Model Performance
 
