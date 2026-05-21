@@ -9,7 +9,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here' 
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback_key_123') 
 
 # --- LOAD ML MODEL GLOBALLY ---
 try:
@@ -370,4 +370,4 @@ def logout():
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0', port=10000)
