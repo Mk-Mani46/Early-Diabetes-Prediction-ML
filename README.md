@@ -6,6 +6,8 @@
 ![Accuracy](https://img.shields.io/badge/Accuracy-94.95%25-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/License-Educational-yellow?style=flat-square)
 
+🌐 **Live Demo:** https://early-diabetes-prediction-ml-1.onrender.com
+
 > A Flask-based Clinical Decision Support System (CDSS) for early Type 2 Diabetes prediction using a Stacking Ensemble of Naïve Bayes + CatBoost — achieving **94.95% test accuracy** and **98.65% ROC-AUC**.
 
 ---
