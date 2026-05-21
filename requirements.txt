@@ -1,7 +1,8 @@
+--prefer-binary
 flask==3.0.3
 werkzeug==3.0.3
 joblib==1.3.2
 numpy==1.26.4
 pandas==2.1.4
-scikit-learn==1.3.2
+scikit-learn==1.7.2
 catboost==1.2.3
